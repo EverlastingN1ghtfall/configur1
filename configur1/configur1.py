@@ -1,3 +1,4 @@
+from os import curdir
 import tkinter as tk
 import tarfile
 from tkinter import scrolledtext
@@ -66,9 +67,30 @@ class LinuxConsole(tk.Tk):
                     self.cur_path = arg + '/'
                     return
             self.output_text.config(state=tk.NORMAL)
-            self.output_text.insert(tk.END, "Destination invalid or was not found\n")
+            self.output_text.insert(tk.END, f"Destination invalid or was not found: {arg}\n")
             self.output_text.config(state=tk.DISABLED)
             self.output_text.see(tk.END)
+        elif arg[:2] == "..":
+            nodes = arg.split('/')
+            path_nodes = self.cur_path.split('/')
+            up_count = nodes.count("..")
+            path_count = len(path_nodes)
+            if up_count > path_count + 1:
+                self.output_text.config(state=tk.NORMAL)
+                self.output_text.insert(tk.END, "Unable to move upwards\n")
+                self.output_text.config(state=tk.DISABLED)
+                return
+            if up_count == path_count + 1 and (up_count == len(nodes) or (up_count == len(nodes) + 1 and nodes[-1] == "")):
+                self.cur_path = ""
+                return
+            for i in range(up_count - 1, -1, -1):
+                if nodes[i] == "..":
+                    nodes[i] = path_nodes[len(path_nodes) - 1 - i]
+            arg = '/' + '/'.join(path_nodes[:len(path_nodes) - up_count]) + '/' + '/'.join(nodes)
+            self.command_cd(arg)
+
+
+                
 
 
 if __name__ == "__main__":
