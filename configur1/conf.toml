@@ -1,0 +1,5 @@
+[project]
+usr = "Artem"
+host = "DESKTOP-AJH564E"
+path = "files.tar"
+start = "start.sh"
