@@ -65,6 +65,8 @@ class LinuxConsole(tk.Tk):
             exit(1)
         elif command == "echo" and len(req.split()) >= 2:
             self.command_echo(req.split()[1:])
+        elif command == "chown" and len(req.split()) == 3:
+            self.command_chown(req.split()[1], req.split()[2])
 
     def command_ls_cur(self):
         self.output_text.config(state=tk.NORMAL)
@@ -112,6 +114,7 @@ class LinuxConsole(tk.Tk):
         self.output_text.config(state=tk.NORMAL)
         self.output_text.insert(tk.END, "Reassign successful\n")
         self.output_text.config(state=tk.DISABLED)
+        self.output_text.see(tk.END)
 
     def find(self, arg: str):
         if arg[0] == '/':
