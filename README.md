@@ -37,3 +37,5 @@
 ![image](https://github.com/user-attachments/assets/f2694c1b-e3ff-4206-bf90-7a7be71c64d6)
 
 Тесты на на команду exit отсутствуют, так как не имеют смысла.
+
+repo url: https://github.com/EverlastingN1ghtfall/configur1
