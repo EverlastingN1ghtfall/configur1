@@ -77,7 +77,7 @@ class LinuxConsole(tk.Tk):
         self.output_text.see(tk.END)
 
     def command_ls(self, arg: str, flag: bool = False):
-        if not(flag):
+        if not flag:
             path = self.cur_path
             code = self.command_cd(arg)
             if code == -1:
@@ -86,7 +86,7 @@ class LinuxConsole(tk.Tk):
             self.cur_path = path
             return
 
-    def command_chown(self, toAssign: str, file: str):
+    def command_chown(self, toassign: str, file: str):
         ind = self.find(file)
         if ind <= 0:
             self.output_text.config(state=tk.NORMAL)
@@ -97,17 +97,21 @@ class LinuxConsole(tk.Tk):
 
         usr = ""
         group = ""
-        if toAssign.count(':') == 1:
-            assigns = toAssign.split(':')
+        if toassign.count(':') == 1:
+            assigns = toassign.split(':')
             usr = assigns[0]
             group = assigns[1]
         else:
-            usr = toAssign
+            usr = toassign
 
         if usr != "":
             self.full_files[ind].uname = usr
         if group != "":
             self.full_files[ind].gname = group
+
+        self.output_text.config(state=tk.NORMAL)
+        self.output_text.insert(tk.END, "Reassign successful\n")
+        self.output_text.config(state=tk.DISABLED)
 
     def find(self, arg: str):
         if arg[0] == '/':
@@ -135,7 +139,7 @@ class LinuxConsole(tk.Tk):
         else:
             return self.command_cd('/' + self.cur_path + arg)
 
-    def command_cd(self, arg: str): 
+    def command_cd(self, arg: str):
         if arg[0] == '/':
             if arg[-1] == '/':
                 arg = arg[:-1]
@@ -180,7 +184,7 @@ class LinuxConsole(tk.Tk):
 
 
 def parse_toml(path:str):
-    a = open("conf.toml", "rb")
+    a = open(path, "rb")
     data = tomllib.load(a)
     a.close()
     return data
